@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
+<?import fi.jyu.mit.fxgui.ListChooser?>
+<?import fi.jyu.mit.fxgui.StringGrid?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="601.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxAlbumirekisteri.AlbumirekisteriViewController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Tiedosto">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleAvaa" text="Avaa">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
+                  <MenuItem onAction="#handleSulje" text="_Sulje">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Muokkaa">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleLisaaAlbumi" text="Lisää uusi albumi" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaAlbumi" text="Poista albumi" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Apua">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleLisatietoja" text="Tietoja" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOhje" text="Ohje" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.2229299363057325, 0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <BorderPane maxWidth="-Infinity" minWidth="200.0" prefHeight="524.0" prefWidth="201.0">
+               <top>
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" BorderPane.alignment="CENTER">
+                     <bottom>
+                        <Label alignment="CENTER" prefHeight="0.0" prefWidth="170.0" text="Albumit" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <center>
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="168.0" text="Hakuehto">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="hakuehto" onKeyReleased="#handleHakuehto">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <ComboBoxChooser fx:id="cbKentat" prefWidth="165.0" rivit="Albumi&#10;Artisti&#10;Julkaisuvuosi&#10;Levy-yhtiö&#10;Genre&#10;Formaatti&#10;Kunto&#10;Hinta (€)">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </ComboBoxChooser>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </top>
+               <bottom>
+                  <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="67.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Kokoelman arvo">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="textArvo" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" />
+                     </padding>
+                     <BorderPane.margin>
+                        <Insets top="10.0" />
+                     </BorderPane.margin>
+                  </GridPane>
+               </bottom>
+               <center>
+                  <ListChooser fx:id="chooserAlbumit" rivit="Is This The Life We Really Want&#10;II&#10;Pako-Laine" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="238.0">
+               <center>
+                  <ScrollPane fx:id="panelAlbumi" fitToWidth="true" prefHeight="524.0" prefWidth="232.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <GridPane fx:id="gridAlbumi" hgap="10.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Albumi" />
+                              <Label text="Artisti" GridPane.rowIndex="1" />
+                              <Label text="Julkaisuvuosi" GridPane.rowIndex="2" />
+                              <Label text="Levy-yhtiö" GridPane.rowIndex="3" />
+                              <Label text="Genre" GridPane.rowIndex="4" />
+                              <Label text="Kunto" GridPane.rowIndex="6" />
+                              <Label text="Hinta (€)" GridPane.rowIndex="7" />
+                              <TextField fx:id="editAlbumi" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" prefHeight="25.0" prefWidth="153.0" text="Roger Waters" GridPane.columnIndex="1" />
+                              <TextField fx:id="editArtisti" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" prefHeight="25.0" prefWidth="124.0" text="Is This The Life We Really Want?" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="editJvuosi" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" text="2017" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="editYhtio" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" text="Columbia" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="editGenre" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" text="Rock" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="editKunto" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" text="VG+" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="editHinta" editable="false" minWidth="170.0" onMouseClicked="#handleMuokkaaAlbumi" text="14.90" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label text="Formaatti" GridPane.rowIndex="5" />
+                              <TextField fx:id="editFormaatti" editable="false" onMouseClicked="#handleMuokkaaAlbumi" prefHeight="25.0" prefWidth="205.0" text="LP" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                           </padding>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </center>
+               <top>
+                  <Label text="Albumin tiedot" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <Label fx:id="labelVirhe" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+            <BorderPane maxWidth="250.0" prefWidth="200.0">
+               <top>
+                  <Label text="Kappalelista" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <StringGrid fx:id="tableKappaleet" prefHeight="507.0" prefWidth="290.0" rivit="Kappale|Kesto&#10;When We Were Young|4:39&#10;Déjà Vu|4:02&#10;The Last Refugee|5:52&#10;Picture That|6:08&#10;Broken Bones|6:40&#10;Is This The Life We Really Want?|6:23&#10;Bird In A Gale|6:40&#10;The Most Beautiful Girl|7:07&#10;Smell The Roses|10:11&#10;Wait For Her|4:54&#10;Oceans Apart|5:52&#10;Part Of Me Died|4:12" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="5.0" />
+                     </BorderPane.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy></StringGrid>
+               </center>
+               <bottom>
+                  <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleLisaaKappale" prefHeight="25.0" prefWidth="91.0" text="Lisää">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button layoutX="42.0" layoutY="20.0" mnemonicParsing="false" onAction="#handlePoistaKappale" prefHeight="25.0" prefWidth="91.0" text="Poista">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="43.0" prefWidth="787.0" BorderPane.alignment="CENTER">
+         <left>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleLisaaAlbumi" text="Lisää Albumi">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleMuokkaaAlbumi" text="Muokkaa Albumia">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button layoutX="118.0" layoutY="20.0" mnemonicParsing="false" onAction="#handlePoistaAlbumi" text="Poista Albumi">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </left>
+      </BorderPane>
+   </bottom>
+</BorderPane>
